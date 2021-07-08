@@ -1,7 +1,7 @@
 import argparse
 from time import time
 
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import numpy as np
 import pandas as pd
 
@@ -17,7 +17,7 @@ def main(train: str):
         raise Exception("invalid or missing model instructions (Train or Eval)")
 
     # load data
-    print("\nPENN DATA CHALLENGE\n\n\nLoading Data\n\n")
+    print("\nPENN DATA CHALLENGE\n\n\nLoading Data...\n\n")
     data = pd.read_csv("data/bitcoin.csv").drop(
         ["time_period_start", "time_period_end", "time_open", "time_close"], axis=1
     )
@@ -34,6 +34,7 @@ def main(train: str):
     # train model
     if training:
         model = build_model()
+        print("\n\nTraining RNN Model...\n")
         start = time()
         history = model.fit(
             trainX, trainY, batch_size=32, epochs=10, validation_split=0.3, verbose=1
@@ -45,6 +46,7 @@ def main(train: str):
 
     else:
         # load model
+        print("\n\nLoading RNN Model...\n")
         model = load_model("model/bitcoin_rnn.h5")
 
     # predict
@@ -54,9 +56,9 @@ def main(train: str):
 
     # evaluate predictions
     rmse = np.sqrt(np.mean(np.square((real_price - real_pred))))
-    print("\n\nRMSE: ", rmse)
-    print("\nFirst 10 Predictions:\n", real_pred[:10])
+    print("\n\nFirst 10 Predictions:\n", real_pred[:10])
     print("\n\nFirst 10 Prices:\n", real_price[:10])
+    print("\n\nRMSE: ", rmse, "\n\n")
 
 
 if __name__ == "__main__":
