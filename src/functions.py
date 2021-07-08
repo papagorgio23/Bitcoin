@@ -3,10 +3,9 @@ from time import time
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
-from keras.models import Sequential
-from keras.layers import Dropout, Activation, Dense
-from keras.layers.recurrent import LSTM
-from keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dropout, Activation, Dense, LSTM
+from tensorflow.keras.optimizers import Adam
 
 
 def prep_data(dataset):
